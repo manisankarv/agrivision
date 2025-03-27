@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriVision - Login</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-container button:hover {
+            background: #219150;
+        }
+        .signup-btn {
+            margin-top: 10px;
+            background: #2980b9;
+        }
+        .signup-btn:hover {
+            background: #1f6690;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">AgriVision</div>
+    <div class="login-container">
+        <h2>User Login</h2>
+        <input type="text" placeholder="Username" id="username">
+        <input type="password" placeholder="Password" id="password">
+        <button onclick="login()">Login</button>
+        <button class="signup-btn" onclick="window.location.href='signuppage.html'">Sign Up</button>
+    </div>
+    <script>
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            
+            if (username === "admin" && password === "password") {
+                alert("Login successful!");
+                window.location.href = "home.html";
+            } else {
+                alert("Invalid credentials");
+            }
+        }
+    </script>
+</body>
+</html>

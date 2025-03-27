@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriVision - Disaster Management</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .submit-button:hover {
+            background: #219150;
+        }
+
+        /* Success Alert Styles */
+        .success-alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2ecc71;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+        .success-alert button {
+            background: white;
+            color: #2ecc71;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .success-alert button:hover {
+            background: #27ae60;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Disaster Management Application</h2>
+        <select class="input-field" id="state">
+            <option value="">Select State</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+        </select>
+        <select  class="input-field" id="district">
+            <option value="">Select District</option>
+            <option value="Ariyalur">Ariyalur</option>
+            <option value="Chengalpattu">Chengalpattu</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Cuddalore">Cuddalore</option>
+            <option value="Dharmapuri">Dharmapuri</option>
+            <option value="Dindigul">Dindigul</option>
+            <option value="Erode">Erode</option>
+            <option value="Kallakurichi">Kallakurichi</option>
+            <option value="Kancheepuram">Kancheepuram</option>
+            <option value="Karur">Karur</option>
+            <option value="Krishnagiri">Krishnagiri</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Mayiladuthurai">Mayiladuthurai</option>
+            <option value="Nagapattinam">Nagapattinam</option>
+            <option value="Namakkal">Namakkal</option>
+            <option value="Perambalur">Perambalur</option>
+            <option value="Pudukkottai">Pudukkottai</option>
+            <option value="Ranipet">Ranipet</option>
+            <option value="Salem">Salem</option>
+            <option value="Sivakasi">Sivakasi</option>
+            <option value="Sivaganga">Sivaganga</option>
+            <option value="Sri Perumbudur">Sri Perumbudur</option>
+            <option value="Thanjavur">Thanjavur</option>
+            <option value="Theni">Theni</option>
+            <option value="Thoothukudi">Thoothukudi</option>
+            <option value="Tirachirappalli">Tirachirappalli</option>
+            <option value="Tirunelveli">Tirunelveli</option>
+            <option value="Tirupati">Tirupati</option>
+            <option value="Tirupattur">Tirupattur</option>
+            <option value="Tiruppur">Tiruppur</option>
+            <option value="Tiruvallur">Tiruvallur</option>
+            <option value="Tiruvannamalai">Tiruvannamalai</option>
+            <option value="Vellore">Vellore</option>
+            <option value="Vilupuram">Vilupuram</option>
+            <option value="Virudhunagar">Virudhunagar</option>
+        </select>
+        <select class="input-field" id="taluk">
+            
+                <option value="">Select Taluk</option>
+                <option value="Ambasamudram">Ambasamudram</option>
+                <option value="Aranthangi">Aranthangi</option>
+                <option value="Arcot">Arcot</option>
+                <option value="Ariyalur">Ariyalur</option>
+                <option value="Attur">Attur</option>
+                <option value="Avinashi">Avinashi</option>
+                <option value="Bodinayakanur">Bodinayakanur</option>
+                <option value="Budalur">Budalur</option>
+                <option value="Chengalpattu">Chengalpattu</option>
+                <option value="Chidambaram">Chidambaram</option>
+                <option value="Chinnasalem">Chinnasalem</option>
+                <option value="Coimbatore North">Coimbatore North</option>
+                <option value="Coimbatore South">Coimbatore South</option>
+                <option value="Cuddalore">Cuddalore</option>
+                <option value="Devakottai">Devakottai</option>
+                <option value="Dharmapuri">Dharmapuri</option>
+                <option value="Dindigul">Dindigul</option>
+                <option value="Egmore">Egmore</option>
+                <option value="Erode">Erode</option>
+                <option value="Gobichettipalayam">Gobichettipalayam</option>
+                <option value="Gudiyatham">Gudiyatham</option>
+                <option value="Harur">Harur</option>
+                <option value="Hosur">Hosur</option>
+                <option value="Iluppur">Iluppur</option>
+                <option value="Kallakurichi">Kallakurichi</option>
+                <option value="Kancheepuram">Kancheepuram</option>
+                <option value="Karaikudi">Karaikudi</option>
+                <option value="Karur">Karur</option>
+                <option value="Kilvelur">Kilvelur</option>
+                <option value="Kodaikanal">Kodaikanal</option>
+                <option value="Krishnagiri">Krishnagiri</option>
+                <option value="Kulithalai">Kulithalai</option>
+                <option value="Kumbakonam">Kumbakonam</option>
+                <option value="Kuthalam">Kuthalam</option>
+                <option value="Madurantakam">Madurantakam</option>
+                <option value="Madurai North">Madurai North</option>
+                <option value="Madurai South">Madurai South</option>
+                <option value="Manapparai">Manapparai</option>
+                <option value="Mayiladuthurai">Mayiladuthurai</option>
+                <option value="Mettupalayam">Mettupalayam</option>
+                <option value="Mettur">Mettur</option>
+                <option value="Mylapore">Mylapore</option>
+                <option value="Nagapattinam">Nagapattinam</option>
+                <option value="Namakkal">Namakkal</option>
+                <option value="Orathanadu">Orathanadu</option>
+                <option value="Palladam">Palladam</option>
+                <option value="Palani">Palani</option>
+                <option value="Panruti">Panruti</option>
+                <option value="Papanasam">Papanasam</option>
+                <option value="Paramakudi">Paramakudi</option>
+                <option value="Pattukottai">Pattukottai</option>
+                <option value="Perambalur">Perambalur</option>
+                <option value="Peravurani">Peravurani</option>
+    
+                <option value="Periyakulam">Periyakulam</option>
+                <option value="Pochampalli">Pochampalli</option>
+                <option value="Pollachi">Pollachi</option>
+                <option value="Pudukkottai">Pudukkottai</option>
+                <option value="Rajapalayam">Rajapalayam</option>
+                <option value="Ramanathapuram">Ramanathapuram</option>
+                <option value="Rasipuram">Rasipuram</option>
+                <option value="Salem">Salem</option>
+                <option value="Sankarapuram">Sankarapuram</option>
+                <option value="Sathyamangalam">Sathyamangalam</option>
+                <option value="Sendurai">Sendurai</option>
+                <option value="Sirkali">Sirkali</option>
+                <option value="Sivagangai">Sivagangai</option>
+                <option value="Sivakasi">Sivakasi</option>
+                <option value="Sriperumbudur">Sriperumbudur</option>
+                <option value="Tenkasi">Tenkasi</option>
+                <option value="Thanjavur">Thanjavur</option>
+                <option value="Tharangambadi">Tharangambadi</option>
+                <option value="Theni">Theni</option>
+                <option value="Thirukalukundram">Thirukalukundram</option>
+                <option value="Thiruvadanai">Thiruvadanai</option>
+                <option value="Thiruvidaimarudur">Thiruvidaimarudur</option>
+                <option value="Thiruvaiyaru">Thiruvaiyaru</option>
+                <option value="Thiruvonam">Thiruvonam</option>
+                <option value="Tindivanam">Tindivanam</option>
+                <option value="Tiruchengode">Tiruchengode</option>
+                <option value="Tiruchirappalli">Tiruchirappalli</option>
+                <option value="Tirunelveli">Tirunelveli</option>
+                <option value="Tiruppur">Tiruppur</option>
+                <option value="Tiruvarur">Tiruvarur</option>
+                <option value="Tondiarpet">Tondiarpet</option>
+                <option value="Usilampatti">Usilampatti</option>
+                <option value="Udayarpalayam">Udayarpalayam</option>
+                <option value="Uthiramerur">Uthiramerur</option>
+                <option value="Veppanthattai">Veppanthattai</option>
+                <option value="Vellore">Vellore</option>
+                <option value="Viluppuram">Viluppuram</option>
+                <option value="Virudhunagar">Virudhunagar</option>
+            
+            
+        </select>
+        <input type="text" class="input-field" id="surveyNumber" placeholder="Survey Number">
+        <input type="text" class="input-field" id="disasterType" placeholder="Disaster Type (Flood, Drought, etc.)">
+        <input type="text" class="input-field" id="severity" placeholder="Disaster Severity (Mild, Severe, Extreme)">
+        <input type="number" class="input-field" id="affectedArea" placeholder="Affected Area (in Acres)">
+        <input type="text" class="input-field" id="infraDamage" placeholder="Infrastructure Damage (Yes/No)">
+        <input type="number" class="input-field" id="totalInvestment" placeholder="Total Investment (₹)">
+        <select class="input-field" id="insuranceCoverage">
+            <option value="">Insurance Coverage?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <input type="email" class="input-field" id="email" placeholder="Email for Confirmation">
+        <button class="submit-button" onclick="submitApplication()">Submit Application</button>
+    </div>
+
+    <!-- Success Alert Box -->
+    <div class="success-alert" id="successAlert">
+        <h3>✅ Application Submitted Successfully!</h3>
+        <p>Our team will review your details and get in touch shortly.</p>
+        <p>A confirmation email has been sent to <b id="userEmail"></b>.</p>
+        <button onclick="closeAlert()">OK</button>
+    </div>
+
+    <script>
+        function submitApplication() {
+            let state = document.getElementById("state").value.trim();
+            let district = document.getElementById("district").value.trim();
+            let taluk = document.getElementById("taluk").value.trim();
+            let surveyNumber = document.getElementById("surveyNumber").value.trim();
+            let disasterType = document.getElementById("disasterType").value.trim();
+            let severity = document.getElementById("severity").value.trim();
+            let affectedArea = document.getElementById("affectedArea").value.trim();
+            let infraDamage = document.getElementById("infraDamage").value.trim();
+            let totalInvestment = document.getElementById("totalInvestment").value.trim();
+            let insuranceCoverage = document.getElementById("insuranceCoverage").value;
+            let email = document.getElementById("email").value.trim();
+
+            if (!state || !district || !taluk || !surveyNumber || !disasterType || !severity || !affectedArea || !infraDamage || !totalInvestment || !insuranceCoverage || !email) {
+                alert("⚠️ Please fill all fields before submitting.");
+                return;
+            }
+
+            // Show success alert
+            document.getElementById("userEmail").innerText = email;
+            document.getElementById("successAlert").style.display = "block";
+        }
+
+        function closeAlert() {
+            document.getElementById("successAlert").style.display = "none";
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

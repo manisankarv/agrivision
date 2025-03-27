@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriVision - Discussion Forum</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .forum-container {
+            width: 60%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .post-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .post-button {
+            padding: 10px 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .post-button:hover {
+            background: #219150;
+        }
+        .forum-posts {
+            margin-top: 20px;
+        }
+        .post {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .reply-input {
+            width: 80%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .reply-button {
+            padding: 8px 12px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .reply-button:hover {
+            background: #216a94;
+        }
+        .replies {
+            margin-left: 20px;
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">AgriVision - Discussion Forum</div>
+
+    <div class="forum-container">
+        <h2>Post a Question</h2>
+        <input type="text" id="postInput" class="post-input" placeholder="Type your question here...">
+        <button class="post-button" onclick="addPost()">Post</button>
+
+        <div class="forum-posts" id="forumPosts">
+            <!-- Posts will be added here dynamically -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadPosts);
+
+        function addPost() {
+            let postText = document.getElementById("postInput").value;
+            if (postText.trim() === "") {
+                alert("Please enter a question.");
+                return;
+            }
+
+            let post = {
+                id: Date.now(),
+                text: postText,
+                replies: []
+            };
+
+            let posts = JSON.parse(localStorage.getItem("forumPosts")) || [];
+            posts.push(post);
+            localStorage.setItem("forumPosts", JSON.stringify(posts));
+
+            document.getElementById("postInput").value = "";
+            loadPosts();
+        }
+
+        function addReply(postId) {
+            let replyInput = document.getElementById(`replyInput-${postId}`);
+            let replyText = replyInput.value.trim();
+            if (replyText === "") {
+                alert("Please enter a reply.");
+                return;
+            }
+
+            let posts = JSON.parse(localStorage.getItem("forumPosts")) || [];
+            posts.forEach(post => {
+                if (post.id === postId) {
+                    post.replies.push(replyText);
+                }
+            });
+
+            localStorage.setItem("forumPosts", JSON.stringify(posts));
+            loadPosts();
+        }
+
+        function loadPosts() {
+            let forumPosts = document.getElementById("forumPosts");
+            forumPosts.innerHTML = "";
+            let posts = JSON.parse(localStorage.getItem("forumPosts")) || [];
+
+            posts.forEach(post => {
+                let postElement = document.createElement("div");
+                postElement.classList.add("post");
+                postElement.innerHTML = `
+                    <p><strong>Q:</strong> ${post.text}</p>
+                    <input type="text" id="replyInput-${post.id}" class="reply-input" placeholder="Write a reply...">
+                    <button class="reply-button" onclick="addReply(${post.id})">Reply</button>
+                    <div class="replies">
+                        ${post.replies.map(reply => `<p><strong>Reply:</strong> ${reply}</p>`).join('')}
+                    </div>
+                `;
+                forumPosts.appendChild(postElement);
+            });
+        }
+    </script>
+</body>
+</html>

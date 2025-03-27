@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h2 {
+            color: #2c5e1a;
+        }
+        .symptoms-list {
+            text-align: left;
+            margin: 15px 0;
+        }
+        .symptoms-list label {
+            display: block;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .symptoms-list input {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        #result img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🌱 Select Symptoms:</h2>
+        <form id="symptomForm">
+            <div class="symptoms-list">
+                <label><input type="checkbox" value="Yellow Leaves"> Yellow Leaves</label>
+                <label><input type="checkbox" value="Wilting"> Wilting</label>
+                <label><input type="checkbox" value="Black Spots"> Black Spots</label>
+                <label><input type="checkbox" value="Dry Leaves"> Dry Leaves</label>
+                <label><input type="checkbox" value="White Powder"> White Powder</label>
+                <label><input type="checkbox" value="Brown Patches"> Brown Patches</label>
+                <label><input type="checkbox" value="Mold Growth"> Mold Growth</label>
+                <label><input type="checkbox" value="Stunted Growth"> Stunted Growth</label>
+            </div>
+            <button type="button" onclick="checkDisease()">Check Disease</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const diseases = [
+            { name: "Chlorosis", symptoms: ["Yellow Leaves"], remedy: "Improve drainage, avoid overwatering, use nitrogen or iron-rich fertilizer.", image: "chlorosis.jpg" },
+            { name: "Verticillium Wilt", symptoms: ["Wilting"], remedy: "Improve soil drainage, remove infected plants, use disease-resistant varieties.", image: "verticillium_wilt.jpg" },
+            { name: "Black Spot Disease", symptoms: ["Black Spots"], remedy: "Prune affected leaves, improve air circulation, use fungicides or bactericides.", image: "black_spot.jpg" },
+            { name: "Underwatering", symptoms: ["Dry Leaves"], remedy: "Water consistently, maintain humidity, avoid excessive watering.", image: "underwatering.jpg" },
+            { name: "Powdery Mildew", symptoms: ["White Powder"], remedy: "Remove affected leaves, use neem oil or fungicides, improve airflow.", image: "powdery_mildew.jpg" },
+            { name: "Rust Disease", symptoms: ["Brown Patches"], remedy: "Use calcium supplements, avoid overhead watering, apply copper-based fungicides.", image: "rust_disease.jpg" },
+            { name: "Gray Mold", symptoms: ["Mold Growth"], remedy: "Remove infected plant parts, reduce humidity, apply fungicides.", image: "gray_mold.jpg" },
+            { name: "Viral Infection", symptoms: ["Stunted Growth"], remedy: "Remove infected plants, improve soil fertility, apply balanced fertilizers.", image: "viral_infection.jpg" }
+        ];
+
+        function checkDisease() {
+            let selectedSymptoms = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+                selectedSymptoms.push(checkbox.value);
+            });
+
+            if (selectedSymptoms.length === 0) {
+                document.getElementById("result").innerText = "❌ Please select at least one symptom!";
+                return;
+            }
+
+            let foundDisease = diseases.find(disease => selectedSymptoms.some(symptom => disease.symptoms.includes(symptom)));
+            
+            if (foundDisease) {
+                document.getElementById("result").innerHTML = 
+                    `<b>✅ Disease:</b> ${foundDisease.name} <br>
+                     <b>💡 Remedy:</b> ${foundDisease.remedy} <br>
+                     <img src="${foundDisease.image}" alt="${foundDisease.name}">`;
+            } else {
+                document.getElementById("result").innerText = "❌ No matching disease found!";
+            }
+        }
+    </script>
+</body>
+</html>

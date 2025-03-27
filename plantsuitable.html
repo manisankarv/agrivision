@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Suitability</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .info {
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .info strong {
+            color: #27ae60;
+        }
+        .suitable-plants {
+            margin-top: 20px;
+            padding: 10px;
+            background: #eafbea;
+            border-radius: 5px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Plant Suitability Report</h2>
+        
+        <div class="info"><strong>State:</strong> <span id="state"></span></div>
+        <div class="info"><strong>District:</strong> <span id="district"></span></div>
+        <div class="info"><strong>Taluk:</strong> <span id="taluk"></span></div>
+       
+        <div class="info"><strong>Survey Number:</strong> <span id="surveyNumber"></span></div>
+        <div class="info"><strong>Soil Type:</strong> <span id="soilType"></span></div>
+
+        <div class="suitable-plants">
+            <h3>Suitable Plants:</h3>
+            <ul id="plantList"></ul>
+        </div>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                state: params.get("state") || "Not Provided",
+                district: params.get("district") || "Not Provided",
+                taluk: params.get("taluk") || "Not Provided",
+           
+                surveyNumber: params.get("surveyNumber") || "Not Provided",
+            };
+        }
+
+        function determineSoilType(district) {
+    const soilMapping = {
+        "Thanjavur": "Alluvial Soil",
+        "Thiruvarur": "Alluvial Soil",
+        "Tirunelveli": "Red Soil",
+        "Madurai": "Red Soil",
+        "Coimbatore": "Black Soil",
+        "Salem": "Laterite Soil",
+        "Dharmapuri": "Laterite Soil",
+        "Nagapattinam": "Saline and Alkaline Soil",
+        "Ramanathapuram": "Saline and Alkaline Soil",
+        "Thoothukudi": "Sandy Soil",
+        "Kanyakumari": "Laterite Soil",
+        "Erode": "Red Soil",
+        "Tiruppur": "Black Soil",
+        "Dindigul": "Red Soil",
+        "Virudhunagar": "Red Soil",
+        "Pudukkottai": "Red Soil",
+        "Karur": "Black Soil",
+        "Perambalur": "Black Cotton Soil",
+        "Ariyalur": "Black Cotton Soil",
+        "Villupuram": "Red and Laterite Soil",
+        "Cuddalore": "Red and Laterite Soil",
+        "Tiruvannamalai": "Red and Laterite Soil",
+        "Kanchipuram": "Alluvial Soil",
+        "Chengalpattu": "Alluvial Soil",
+        "Tiruvallur": "Alluvial Soil",
+        "Vellore": "Red and Laterite Soil",
+        "Ranipet": "Red and Laterite Soil",
+        "Tenkasi": "Red Soil",
+        "Namakkal": "Black Soil",
+        "Nilgiris": "Mountain Soil",
+        "Chennai": "Coastal Alluvial Soil",
+        "Krishnagiri": "Red and Laterite Soil",
+        "Mayiladuthurai": "Alluvial Soil",
+        "Sivaganga": "Red Soil",
+        "Theni": "Red Soil",
+        "Kallakurichi": "Red and Laterite Soil",
+        "Tirupattur": "Red and Laterite Soil",
+        "Udumalaipettai": "Black Soil",
+        "Sankarankoil": "Red Soil",
+        "Tiruchirappalli": "Alluvial Soil",
+        "Nagarkoil": "Laterite Soil",
+        "Hosur": "Red and Laterite Soil"
+    };
+    return soilMapping[district] || "Alluvial Soil"; // Default to Alluvial Soil if the district is not found
+}
+
+
+
+
+        function displayData() {
+            const data = getQueryParams();
+            const soilType = determineSoilType(data.district);
+
+            document.getElementById("state").textContent = data.state;
+            document.getElementById("district").textContent = data.district;
+            document.getElementById("taluk").textContent = data.taluk;
+          
+            document.getElementById("surveyNumber").textContent = data.surveyNumber;
+            document.getElementById("soilType").textContent = soilType;
+
+            const plantList = document.getElementById("plantList");
+            plantList.innerHTML = ""; 
+
+            const suitablePlants = {
+    "Alluvial Soil": ["Rice", "Sugarcane", "Banana", "Pulses", "Cotton", "Wheat", "Maize", "Vegetables", "Jute", "Mustard", "Barley", "Lentils"],
+    "Red Soil": ["Groundnut", "Millets (Ragi, Jowar, Bajra)", "Pulses (Green Gram, Black Gram)", "Tobacco", "Fruits (Mango, Guava, Pomegranate, Papaya)", "Vegetables (Tomato, Onion, Carrot, Beetroot)", "Castor", "Chili", "Tamarind"],
+    "Black Soil": ["Cotton", "Maize", "Sunflower", "Pulses", "Sugarcane", "Wheat", "Sorghum", "Tobacco", "Soybean", "Gram (Chickpea)", "Linseed"],
+    "Laterite Soil": ["Tea", "Coffee", "Rubber", "Coconut", "Pepper", "Cashew", "Pineapple", "Arecanut", "Jackfruit", "Banana", "Sweet Potato", "Ginger", "Turmeric"],
+    "Saline and Alkaline Soil": ["Coconut", "Casuarina", "Salt-tolerant Paddy", "Barley", "Date Palm", "Mustard", "Sugar Beet", "Spinach", "Quinoa", "Atriplex (Saltbush)"],
+    "Sandy Soil": ["Casuarina", "Coconut", "Groundnut", "Watermelon", "Melons", "Cucumber", "Sesame", "Sweet Potato", "Drumstick", "Aloe Vera", "Peanuts"],
+    "Black Cotton Soil": ["Cotton", "Jowar", "Tur (Arhar)", "Soybean", "Pulses", "Wheat", "Maize", "Castor", "Chili", "Onion", "Garlic", "Gram"],
+    "Red and Laterite Soil": ["Millets", "Pulses", "Groundnut", "Fruits (Mango, Jackfruit, Banana)", "Spices (Pepper, Cardamom)", "Rubber", "Cashew", "Pineapple"],
+    "Coastal Alluvial Soil": ["Coconut", "Casuarina", "Rice", "Mango", "Banana", "Sugarcane", "Arecanut", "Jackfruit", "Betel Vine", "Tapioca", "Yam", "Salt-resistant Grasses"],
+    "Mountain Soil": ["Tea", "Coffee", "Spices (Cardamom, Pepper, Clove, Cinnamon)", "Fruits (Apple, Plum, Peach, Pear, Cherry)", "Potato", "Carrot", "Cabbage", "Cauliflower", "Strawberry", "Walnuts"],
+    "Unknown Soil Type": ["No suitable plant data available"]
+};
+
+
+
+
+            const plants = suitablePlants[soilType] || ["No data available"];
+
+            plants.forEach(plant => {
+                const li = document.createElement("li");
+                li.textContent = plant;
+                plantList.appendChild(li);
+            });
+        }
+
+        window.onload = displayData;
+    </script>
+</body>
+</html>

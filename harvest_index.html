@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Price | AgriVision</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; }
+        label, select { display: block; width: 100%; padding: 8px; margin-top: 10px; }
+        button { margin-top: 20px; padding: 10px; width: 100%; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #fff; border-radius: 5px; }
+        canvas { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Crop Price Information</h2>
+        <label for="crop">Select Crop:</label>
+        <select id="crop">
+            <option value="rice">Rice</option>
+            <option value="wheat">Wheat</option>
+            <option value="maize">Maize</option>
+            <option value="sugarcane">Sugarcane</option>
+            <option value="cotton">Cotton</option>
+            <option value="soybean">Soybean</option>
+            <option value="groundnut">Groundnut</option>
+            <option value="barley">Barley</option>
+            <option value="jowar">Jowar (Sorghum)</option>
+            <option value="bajra">Bajra (Pearl Millet)</option>
+            <option value="mustard">Mustard</option>
+            <option value="sunflower">Sunflower</option>
+            <option value="rapeseed">Rapeseed</option>
+            <option value="turmeric">Turmeric</option>
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+            <option value="black_pepper">Black Pepper</option>
+        </select>
+        <button onclick="getCropPrice()">Get Price</button>
+        <div class="output" id="result"></div>
+        <canvas id="priceChart"></canvas>
+    </div>
+
+    <script>
+        const cropPrices = {
+            rice: { "2022": 2000, "2023": 2200, "2024": 2100, "predicted": 2300 },
+            wheat: { "2022": 2100, "2023": 2300, "2024": 2300, "predicted": 2500 },
+            maize: { "2022": 1500, "2023": 1700, "2024": 1650, "predicted": 1800 },
+            sugarcane: { "2022": 280, "2023": 290, "2024": 290, "predicted": 310 },
+            cotton: { "2022": 5500, "2023": 5300, "2024": 5100, "predicted": 5400 },
+            soybean: { "2022": 3800, "2023": 4000, "2024": 4200, "predicted": 4100 },
+            groundnut: { "2022": 4500, "2023": 4700, "2024": 4600, "predicted": 4800 },
+            barley: { "2022": 1400, "2023": 1350, "2024": 1400, "predicted": 1450 },
+            jowar: { "2022": 1800, "2023": 1900, "2024": 2000, "predicted": 1900 },
+            bajra: { "2022": 1700, "2023": 1750, "2024": 1720, "predicted": 1800 },
+            mustard: { "2022": 4500, "2023": 4600, "2024": 4400, "predicted": 4700 },
+            sunflower: { "2022": 4000, "2023": 4200, "2024": 4100, "predicted": 4300 },
+            rapeseed: { "2022": 4300, "2023": 4400, "2024": 4500, "predicted": 4600 },
+            turmeric: { "2022": 8000, "2023": 7500, "2024": 7200, "predicted": 7800 },
+            coffee: { "2022": 5000, "2023": 4800, "2024": 4700, "predicted": 5100 },
+            tea: { "2022": 220, "2023": 230, "2024": 225, "predicted": 235 },
+            black_pepper: { "2022": 600, "2023": 650, "2024": 640, "predicted": 660 }
+        };
+
+        let chartInstance = null;
+
+        function getCropPrice() {
+            const crop = document.getElementById('crop').value;
+            const prices = cropPrices[crop];
+
+            document.getElementById('result').innerHTML = `
+                <strong>Crop:</strong> ${crop.replace("_", " ").toUpperCase()}<br>
+                <strong>Price in 2022:</strong> ₹${prices["2022"]} per quintal<br>
+                <strong>Price in 2023:</strong> ₹${prices["2023"]} per quintal<br>
+                <strong>Price in 2024:</strong> ₹${prices["2024"]} per quintal<br>
+                <strong>Predicted Price (2025):</strong> ₹${prices["predicted"]} per quintal
+            `;
+
+            updateChart([prices["2022"], prices["2023"], prices["2024"], prices["predicted"]]);
+        }
+
+        function updateChart(priceData) {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["2022", "2023", "2024", "Predicted 2025"],
+                    datasets: [{
+                        label: "Crop Price (₹ per quintal)",
+                        data: priceData,
+                        backgroundColor: ["#FF5733", "#36A2EB", "#FFC300", "#4CAF50"],
+                        borderColor: ["#C70039", "#1E88E5", "#FF8F00", "#388E3C"],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: false } },
+                    plugins: { legend: { display: true, position: 'top' } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
