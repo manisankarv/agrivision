@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriVision - Home</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            color: white;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header .title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .user-section {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .buttons {
+            margin-right: 20px;
+        }
+        .buttons button {
+            padding: 10px 15px;
+            margin: 0 10px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .buttons button:hover {
+            background: #219150;
+        }
+        .user-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        .popup-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .popup-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            display: block;
+            transition: background 0.3s;
+        }
+        .popup-menu a:hover {
+            background: #f1f1f1;
+        }
+        .content {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .introduction {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .feature-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .feature-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            width: 250px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .feature-box:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        .feature-box a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="title">Agricultural AI</div>
+        <div class="user-section">
+            <div class="buttons">
+                <button onclick="location.href='realtime_analyzer.html'">Real-Time Analyzer</button>
+                <button onclick="location.href='discussion_forum.html'">Discussion Forum</button>
+            </div>
+            <img src="download.jpeg" alt="User" class="user-picture" onclick="togglePopup()">
+            <div class="popup-menu" id="popupMenu">
+                <a href="profile.html">Profile</a>
+                <a href="javascript:void(0);" onclick="signOut()">Sign Out</a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="introduction">
+            <h2>Welcome ,</h2>
+            <p>It is a revolutionary platform designed to support farmers with modern agricultural solutions. From soil analysis to government schemes, we provide comprehensive tools to enhance productivity, sustainability, and efficiency in farming.</p>
+        </div>
+        <div class="feature-boxes">
+            <div class="feature-box" onclick="location.href='soilanalyzer.html'">
+                <a href="soilanalyzer.html">Soil Analysis</a>
+            </div>
+            <div class="feature-box" onclick="location.href='disease.html'">
+                <a href="disease.html">Plant Disease Detection</a>
+            </div>
+            <div class="feature-box" onclick="location.href='livestock_management.html'">
+                <a href="livestock_management.html">Livestock Management</a>
+            </div>
+            <div class="feature-box" onclick="location.href='Research'">
+                <a href="https://icar.org.in/swachhta-hi-sewa">Agricultural Research</a>
+            </div>
+            <div class="feature-box" onclick="location.href='harvest_index.html'">
+                <a href="harvest_index.html">Harvest Price Index</a>
+            </div>
+            <div class="feature-box" onclick="location.href='plantadvisor2.html'">
+                <a href="plantadvisor2.html">Plant Adviser</a>
+            </div>
+            <div class="feature-box" onclick="location.href=''">
+                <a href="https://agriwelfare.gov.in/en/Major">Government Schemes</a>
+            </div>
+            <div class="feature-box" onclick="location.href='nanjai.html'">
+                <a href="nanjai.html">Nanjai/Punjai Cultivation</a>
+            </div>
+            <div class="feature-box" onclick="location.href='disaster_management.html'">
+                <a href="disaster_management.html">Disaster Management</a>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        function togglePopup() {
+            var popup = document.getElementById("popupMenu");
+            popup.style.display = popup.style.display === "flex" ? "none" : "flex";
+        }
+
+        // Hide popup when clicking outside
+        document.addEventListener("click", function(event) {
+            var popup = document.getElementById("popupMenu");
+            var userPicture = document.querySelector(".user-picture");
+
+            if (!popup.contains(event.target) && !userPicture.contains(event.target)) {
+                popup.style.display = "none";
+            }
+        });
+
+        // Redirect to Login Page on Sign Out
+        function signOut() {
+            alert("You have been signed out!");
+            window.location.href = "loginpage.html"; 
+        }
+    </script>
+</body>
+</html>
