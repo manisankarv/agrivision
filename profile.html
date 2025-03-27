@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - AgriVision</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: black;
+        }
+        .profile-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: gray;
+            margin: 10px auto;
+            background-image: url('download.jpeg');
+            background-size: cover;
+        }
+        .profile-container h2 {
+            margin-bottom: 10px;
+        }
+        .profile-container label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+        .profile-container input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            background: #27ae60;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .buttons button:hover {
+            background: #219150;
+        }
+        .logout {
+            background: #e74c3c !important;
+        }
+        .logout:hover {
+            background: #c0392b !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div   class="profile-picture"></div>
+        <h2>User Profile</h2>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" disabled>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" disabled>
+
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" disabled>
+
+        <label for="location">Location</label>
+        <input type="text" id="location" disabled>
+
+        <div class="buttons">
+            <button onclick="editProfile()">Edit Profile</button>
+            <button onclick="saveProfile()">Save Changes</button>
+            <button class="logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadUserProfile();
+        });
+
+        function loadUserProfile() {
+            const userData = JSON.parse(localStorage.getItem("userProfile"));
+            if (userData) {
+                document.getElementById("name").value = userData.name || "";
+                document.getElementById("email").value = userData.email || "";
+                document.getElementById("phone").value = userData.phone || "";
+                document.getElementById("location").value = userData.location || "";
+            } else {
+                alert("No user data found! Redirecting to login.");
+                window.location.href = "loginpage.html";
+            }
+        }
+
+        function editProfile() {
+            document.getElementById("name").disabled = false;
+            document.getElementById("email").disabled = false;
+            document.getElementById("phone").disabled = false;
+            document.getElementById("location").disabled = false;
+        }
+
+        function saveProfile() {
+            const updatedProfile = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                location: document.getElementById("location").value,
+            };
+
+            localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+            alert("Profile updated successfully!");
+            
+            document.getElementById("name").disabled = true;
+            document.getElementById("email").disabled = true;
+            document.getElementById("phone").disabled = true;
+            document.getElementById("location").disabled = true;
+        }
+
+        function logout() {
+            localStorage.removeItem("userProfile");
+            alert("You have been logged out!");
+            window.location.href = "loginpage.html"; 
+        }
+    </script>
+</body>
+</html>
+

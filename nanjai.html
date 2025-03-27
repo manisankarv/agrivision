@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultivation Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #aaa;
+        }
+        select, input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #output {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 10px;
+            background: #dff0d8;
+            border-radius: 5px;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 5px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cultivation Guide</h2>
+        <p>Select your land type and enter the crop duration to get the best recommendations.</p>
+        <label for="landType">Select Land Type:</label>
+        <select id="landType">
+            <option value="nanjai">Nanjai (Wetland)</option>
+            <option value="punjai">Punjai (Dryland)</option>
+        </select>
+
+        <label for="duration">Enter Crop Duration (in months):</label>
+        <input type="number" id="duration" min="1" placeholder="Enter duration">
+        
+        <button onclick="getRecommendation()">Get Recommendation</button>
+
+        <div id="output"></div>
+
+        <div class="info">
+            <h3>Understanding Nanjai & Punjai</h3>
+            <p><strong>Nanjai:</strong> Wetland areas suitable for rice, sugarcane, and banana due to water availability.</p>
+            <p><strong>Punjai:</strong> Dryland areas ideal for crops like millets, groundnut, and cotton requiring less water.</p>
+        </div>
+    </div>
+
+    <script>
+        function getRecommendation() {
+            let landType = document.getElementById("landType").value;
+            let duration = parseInt(document.getElementById("duration").value);
+            let output = document.getElementById("output");
+            
+            let recommendations = {
+                nanjai: {
+                    "1-3": "Spinach, Coriander, Radish",
+                    "4-6": "Rice, Sugarcane, Banana",
+                    "7-9": "Paddy, Turmeric, Vegetables",
+                    "10+": "Coconut, Mango, Arecanut"
+                },
+                punjai: {
+                    "1-3": "Green Gram, Black Gram, Sesame",
+                    "4-6": "Millets, Groundnut, Pulses",
+                    "7-9": "Cotton, Sunflower, Maize",
+                    "10+": "Coconut, Neem, Tamarind"
+                }
+            };
+
+            if (isNaN(duration) || duration <= 0) {
+                output.innerHTML = "<span style='color: red;'>Please enter a valid crop duration.</span>";
+                return;
+            }
+
+            let cropType = duration <= 3 ? "1-3" : duration <= 6 ? "4-6" : duration <= 9 ? "7-9" : "10+";
+            let crops = recommendations[landType][cropType];
+            output.innerHTML = `<strong>Recommended Crops:</strong> ${crops}`;
+        }
+    </script>
+</body>
+</html>
+

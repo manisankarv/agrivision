@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Analyzer</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .container input, .container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .container button:hover {
+            background: #219150;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Soil Analyzer</h2>
+        <select id="state">
+            <option value="">Select State</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+        </select>
+        <select id="district">
+            <option value="">Select District</option>
+            <option value="Ariyalur">Ariyalur</option>
+            <option value="Chengalpattu">Chengalpattu</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Cuddalore">Cuddalore</option>
+            <option value="Dharmapuri">Dharmapuri</option>
+            <option value="Dindigul">Dindigul</option>
+            <option value="Erode">Erode</option>
+            <option value="Kallakurichi">Kallakurichi</option>
+            <option value="Kancheepuram">Kancheepuram</option>
+            <option value="Karur">Karur</option>
+            <option value="Krishnagiri">Krishnagiri</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Mayiladuthurai">Mayiladuthurai</option>
+            <option value="Nagapattinam">Nagapattinam</option>
+            <option value="Namakkal">Namakkal</option>
+            <option value="Perambalur">Perambalur</option>
+            <option value="Pudukkottai">Pudukkottai</option>
+            <option value="Ranipet">Ranipet</option>
+            <option value="Salem">Salem</option>
+            <option value="Sivakasi">Sivakasi</option>
+            <option value="Sivaganga">Sivaganga</option>
+            <option value="Sri Perumbudur">Sri Perumbudur</option>
+            <option value="Thanjavur">Thanjavur</option>
+            <option value="Theni">Theni</option>
+            <option value="Thoothukudi">Thoothukudi</option>
+            <option value="Tirachirappalli">Tirachirappalli</option>
+            <option value="Tirunelveli">Tirunelveli</option>
+            <option value="Tirupati">Tirupati</option>
+            <option value="Tirupattur">Tirupattur</option>
+            <option value="Tiruppur">Tiruppur</option>
+            <option value="Tiruvallur">Tiruvallur</option>
+            <option value="Tiruvannamalai">Tiruvannamalai</option>
+            <option value="Vellore">Vellore</option>
+            <option value="Vilupuram">Vilupuram</option>
+            <option value="Virudhunagar">Virudhunagar</option>
+        </select>
+        <select id="taluk">
+            <option value="">Select Taluk</option>
+            <option value="Ambasamudram">Ambasamudram</option>
+            <option value="Aranthangi">Aranthangi</option>
+            <option value="Arcot">Arcot</option>
+            <option value="Ariyalur">Ariyalur</option>
+            <option value="Attur">Attur</option>
+            <option value="Avinashi">Avinashi</option>
+            <option value="Bodinayakanur">Bodinayakanur</option>
+            <option value="Budalur">Budalur</option>
+            <option value="Chengalpattu">Chengalpattu</option>
+            <option value="Chidambaram">Chidambaram</option>
+            <option value="Chinnasalem">Chinnasalem</option>
+            <option value="Coimbatore North">Coimbatore North</option>
+            <option value="Coimbatore South">Coimbatore South</option>
+            <option value="Cuddalore">Cuddalore</option>
+            <option value="Devakottai">Devakottai</option>
+            <option value="Dharmapuri">Dharmapuri</option>
+            <option value="Dindigul">Dindigul</option>
+            <option value="Egmore">Egmore</option>
+            <option value="Erode">Erode</option>
+            <option value="Gobichettipalayam">Gobichettipalayam</option>
+            <option value="Gudiyatham">Gudiyatham</option>
+            <option value="Harur">Harur</option>
+            <option value="Hosur">Hosur</option>
+            <option value="Iluppur">Iluppur</option>
+            <option value="Kallakurichi">Kallakurichi</option>
+            <option value="Kancheepuram">Kancheepuram</option>
+            <option value="Karaikudi">Karaikudi</option>
+            <option value="Karur">Karur</option>
+            <option value="Kilvelur">Kilvelur</option>
+            <option value="Kodaikanal">Kodaikanal</option>
+            <option value="Krishnagiri">Krishnagiri</option>
+            <option value="Kulithalai">Kulithalai</option>
+            <option value="Kumbakonam">Kumbakonam</option>
+            <option value="Kuthalam">Kuthalam</option>
+            <option value="Madurantakam">Madurantakam</option>
+            <option value="Madurai North">Madurai North</option>
+            <option value="Madurai South">Madurai South</option>
+            <option value="Manapparai">Manapparai</option>
+            <option value="Mayiladuthurai">Mayiladuthurai</option>
+            <option value="Mettupalayam">Mettupalayam</option>
+            <option value="Mettur">Mettur</option>
+            <option value="Mylapore">Mylapore</option>
+            <option value="Nagapattinam">Nagapattinam</option>
+            <option value="Namakkal">Namakkal</option>
+            <option value="Orathanadu">Orathanadu</option>
+            <option value="Palladam">Palladam</option>
+            <option value="Palani">Palani</option>
+            <option value="Panruti">Panruti</option>
+            <option value="Papanasam">Papanasam</option>
+            <option value="Paramakudi">Paramakudi</option>
+            <option value="Pattukottai">Pattukottai</option>
+            <option value="Perambalur">Perambalur</option>
+            <option value="Peravurani">Peravurani</option>
+
+            <option value="Periyakulam">Periyakulam</option>
+            <option value="Pochampalli">Pochampalli</option>
+            <option value="Pollachi">Pollachi</option>
+            <option value="Pudukkottai">Pudukkottai</option>
+            <option value="Rajapalayam">Rajapalayam</option>
+            <option value="Ramanathapuram">Ramanathapuram</option>
+            <option value="Rasipuram">Rasipuram</option>
+            <option value="Salem">Salem</option>
+            <option value="Sankarapuram">Sankarapuram</option>
+            <option value="Sathyamangalam">Sathyamangalam</option>
+            <option value="Sendurai">Sendurai</option>
+            <option value="Sirkali">Sirkali</option>
+            <option value="Sivagangai">Sivagangai</option>
+            <option value="Sivakasi">Sivakasi</option>
+            <option value="Sriperumbudur">Sriperumbudur</option>
+            <option value="Tenkasi">Tenkasi</option>
+            <option value="Thanjavur">Thanjavur</option>
+            <option value="Tharangambadi">Tharangambadi</option>
+            <option value="Theni">Theni</option>
+            <option value="Thirukalukundram">Thirukalukundram</option>
+            <option value="Thiruvadanai">Thiruvadanai</option>
+            <option value="Thiruvidaimarudur">Thiruvidaimarudur</option>
+            <option value="Thiruvaiyaru">Thiruvaiyaru</option>
+            <option value="Thiruvonam">Thiruvonam</option>
+            <option value="Tindivanam">Tindivanam</option>
+            <option value="Tiruchengode">Tiruchengode</option>
+            <option value="Tiruchirappalli">Tiruchirappalli</option>
+            <option value="Tirunelveli">Tirunelveli</option>
+            <option value="Tiruppur">Tiruppur</option>
+            <option value="Tiruvarur">Tiruvarur</option>
+            <option value="Tondiarpet">Tondiarpet</option>
+            <option value="Usilampatti">Usilampatti</option>
+            <option value="Udayarpalayam">Udayarpalayam</option>
+            <option value="Uthiramerur">Uthiramerur</option>
+            <option value="Veppanthattai">Veppanthattai</option>
+            <option value="Vellore">Vellore</option>
+            <option value="Viluppuram">Viluppuram</option>
+            <option value="Virudhunagar">Virudhunagar</option>
+        </select>
+        
+   
+        <input type="text" placeholder="Survey Number" id="surveyNumber">
+        <button onclick="redirectToPlantSuitable()">Submit</button>
+    </div>
+    <script>
+        function redirectToPlantSuitable() {
+            const state = document.getElementById("state").value;
+            const district = document.getElementById("district").value;
+            const taluk = document.getElementById("taluk").value;
+           
+            const surveyNumber = document.getElementById("surveyNumber").value;
+
+            if (!state || !district || !taluk  || !surveyNumber) {
+                alert("Please fill in all fields before submitting.");
+                return;
+            }
+
+            const url = `plantsuitable.html?state=${encodeURIComponent(state)}&district=${encodeURIComponent(district)}&taluk=${encodeURIComponent(taluk)}&surveyNumber=${encodeURIComponent(surveyNumber)}`;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
+
+
+
+

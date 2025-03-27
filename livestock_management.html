@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livestock Management | AgriVision</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label, select, input { display: block; margin-top: 10px; width: 100%; padding: 8px; }
+        button { margin-top: 20px; padding: 10px; width: 100%; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #fff; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Livestock Management</h2>
+        <label for="livestock">Type of Livestock:</label>
+        <select id="livestock" onchange="updateBreeds()">
+            <option value="cow">Cow</option>
+            <option value="goat">Goat</option>
+            <option value="chicken">Chicken</option>
+            <option value="sheep">Sheep</option>
+            <option value="pig">Pig</option>
+        </select>
+        
+        <label for="breed">Breed:</label>
+        <select id="breed">
+            <option value="">Select Breed</option>
+        </select>
+        
+        <label for="age">Age (in months):</label>
+        <input type="number" id="age" placeholder="Enter age">
+        
+        <button onclick="getLivestockData()">Get Details</button>
+        
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+      const breeds = {
+    cow: { "Gir": "₹50,000 - ₹80,000", "Jersey": "₹55,000 - ₹75,000", "Holstein": "₹65,000 - ₹90,000" },
+    goat: { "Boer": "₹30,000 - ₹40,000", "Saanen": "₹12,000 - ₹20,000", "Jamunapari": "₹15,000 - ₹25,000", "Beetal": "₹18,000 - ₹30,000", "Black Bengal": "₹6,000 - ₹12,000", "Osmanabadi": "₹10,000 - ₹18,000" },
+    chicken: { "Broiler": "₹220 - ₹250", "Layer": "₹210 - ₹240", "Kadaknath": "₹250 - ₹300", "Aseel": "₹260 - ₹320", "Plymouth Rock": "₹220 - ₹260", "Leghorn": "₹210 - ₹240" },
+    sheep: { "Merino": "₹12,000 - ₹20,000", "Dorper": "₹10,000 - ₹18,000", "Rambouillet": "₹14,000 - ₹22,000", "Deccani": "₹8,000 - ₹15,000", "Bannur": "₹15,000 - ₹25,000", "Nellore": "₹10,000 - ₹18,000" },
+    pig: { "Large White": "₹7,000 - ₹9,000", "Duroc": "₹10,000 - ₹18,000", "Hampshire": "₹12,000 - ₹20,000", "Landrace": "₹10,000 - ₹16,000", "Meishan": "₹8,000 - ₹12,000", "Tamworth": "₹10,000 - ₹18,000" }
+};
+
+        const feeds = {
+            cow: "Green Fodder: Napier grass, Berseem, Lucerne <br> Dry Fodder: Wheat straw, Paddy straw <br> Concentrates: Maize, Barley, Wheat bran, Cottonseed cake <br> Supplements: Mineral mixture, Salt, Vitamins",
+            goat: "Green Fodder: Subabul, Stylo, Lucerne <br> Dry Fodder: Groundnut hay, Gram straw <br> Grains: Maize, Sorghum, Wheat bran <br> Protein Sources: Groundnut cake, Mustard cake <br> Supplements: Mineral blocks, Salt",
+            chicken: "Broilers: Corn, Soybean meal, Fish meal, Vitamins & minerals <br> Layers: Maize, Wheat, Rice bran, Calcium (Limestone or Oyster shell) <br> Kadaknath & Aseel: Millet, Sorghum, Kitchen waste, Earthworms <br> Supplements: Vitamin D, Vitamin B12, Grit for digestion",
+            sheep: "Green Fodder: Lucerne, Berseem, Cowpea <br> Dry Fodder: Gram straw, Paddy straw <br> Grains: Maize, Barley, Wheat bran <br> Protein Sources: Cottonseed cake, Groundnut cake <br> Supplements: Mineral mixture, Salt",
+            pig: "Energy Sources: Maize, Broken rice, Wheat bran <br> Protein Sources: Soybean meal, Fish meal, Groundnut cake <br> Vegetables: Carrots, Pumpkin, Sweet potato <br> Supplements: Lysine, Minerals, Vitamins"
+        };
+
+        const vaccinations = {
+            cow: { "young": "FMD, Brucellosis", "adult": "Anthrax, Rabies" },
+            goat: { "young": "PPR, CDT", "adult": "Enterotoxemia, Blue Tongue" },
+            chicken: { "young": "Marek’s, Newcastle", "adult": "Gumboro, Fowlpox" },
+            sheep: { "young": "Enterotoxemia, PPR", "adult": "Rabies, Blue Tongue" },
+            pig: { "young": "Swine Fever, Erysipelas", "adult": "PRRS, Classical Swine Fever" }
+        };
+
+        const lifespans = { cow: 240, goat: 180, chicken: 72, sheep: 144, pig: 96 };
+
+        function updateBreeds() {
+            const livestock = document.getElementById("livestock").value;
+            const breedSelect = document.getElementById("breed");
+            breedSelect.innerHTML = "<option value=''>Select Breed</option>";
+            Object.keys(breeds[livestock]).forEach(breed => {
+                let option = document.createElement("option");
+                option.value = breed;
+                option.textContent = breed;
+                breedSelect.appendChild(option);
+            });
+        }
+
+        function getLivestockData() {
+            const livestock = document.getElementById('livestock').value;
+            const breed = document.getElementById('breed').value;
+            const age = parseInt(document.getElementById('age').value);
+
+            if (!breed || isNaN(age) || age <= 0) {
+                alert("Please select a breed and enter a valid age.");
+                return;
+            }
+
+            if (age > lifespans[livestock]) {
+                alert("Invalid age entered. The age exceeds the typical lifespan.");
+                return;
+            }
+
+            const marketPrice = breeds[livestock][breed] || "Price not available";
+            const feed = feeds[livestock] || "No feed data available";
+            const vaccination = age < 12 ? vaccinations[livestock]["young"] : vaccinations[livestock]["adult"];
+
+            document.getElementById('result').innerHTML = `<strong>Breed:</strong> ${breed}<br><strong>Age:</strong> ${age} months<br><strong>Vaccination:</strong> ${vaccination}<br><strong>Feed:</strong> ${feed}<br><strong>Market Price:</strong> ${marketPrice}`;
+        }
+    </script>
+</body>
+</html>
+
